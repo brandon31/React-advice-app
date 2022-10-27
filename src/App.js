@@ -22,13 +22,15 @@ class App extends React.Component {
 
   render() {
 
+    const { state } = this.state; 
+
     return (
       <>
       <div className='wrapper'>
       <h1>Random Advice generator</h1>
       <div className='container'>
-         <p>ADVICE #{this.state.id}</p>
-         <p>"{this.state.advice}"</p>
+         <p>ADVICE #{state.id}</p>
+         <p>"{state.advice}"</p>
          <button className='material-symbols-outlined' onClick={this.fetchAdvice}>
             casino
           </button>
