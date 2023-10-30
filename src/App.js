@@ -1,46 +1,40 @@
-import './index.css';
-import React from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-class App extends React.Component {
-  state =  { advice: '', id: '' };
+function App() {
+  const [advice, setAdvice] = useState("");
+  const [id, setId] = useState("");
 
-  fetchAdvice = () => {
-    axios.get("	https://api.adviceslip.com/advice")
+  const fetchAdvice = () => {
+    axios
+      .get("https://api.adviceslip.com/advice")
       .then((response) => {
-        const { advice } = response.data.slip;
-        const { id } = response.data.slip;
-        
-        this.setState({ advice });
-        this.setState({ id });
-
+        const { advice, id } = response.data.slip;
+        setAdvice(advice);
+        setId(id);
       })
       .catch((error) => {
         console.log(error);
-      })
-  }
+      });
+  };
 
-  render() {
+  useEffect(() => {
+    fetchAdvice();
+  }, []);
 
-    const { state } = this.state; 
-
-    return (
-      <>
-      <div className='wrapper'>
+  return (
+    <div className="wrapper">
       <h1>Random Advice generator</h1>
-      <div className='container'>
-         <p>ADVICE #{state.id}</p>
-         <p>"{state.advice}"</p>
-         <button className='material-symbols-outlined' onClick={this.fetchAdvice}>
-            casino
-          </button>
-      <p>Press the dice for a new Advice</p>
+      <div className="container">
+        <p>ADVICE #{id}</p>
+        <p>"{advice}"</p>
+        <button className="material-symbols-outlined" onClick={fetchAdvice}>
+          casino
+        </button>
+        <p>Press the dice for new Advice</p>
       </div>
-      </div>
-      </>
-    );
-
-  }
+    </div>
+  );
 }
 
 export default App;
